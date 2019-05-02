@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "process",
+            "windows": {
+                "command": "dotnet",
+                "args": [
+                    "build",
+                    "${workspaceFolder}/PhantomCore/PhantomCore.csproj",
+                    "--runtime",
+                    "win-x64"
+                ]
+            },
+            "linux": {
+                "command": "dotnet",
+                "args": [
+                    "build",
+                    "${workspaceFolder}/PhantomCore/PhantomCore.csproj",
+                    "--runtime",
+                    "linux-x64"
+                ]
+            },
+            "problemMatcher": "$tsc"
+        },
+        {
+        "label": "publish",
+            "type": "process",
+            "windows": {
+                "command": "dotnet",
+                "args": [
+                    "publish",
+                    "${workspaceFolder}/PhantomCore/PhantomCore.csproj",
+                    "--runtime",
+                    "win-x64"
+                ]
+            },
+            "linux": {
+                "command": "dotnet",
+                "args": [
+                    "publish",
+                    "${workspaceFolder}/PhantomCore/PhantomCore.csproj",
+                    "--runtime",
+                    "linux-x64"
+                ]
+            },
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/PhantomCore/PhantomCore.csproj"
+            ],
+            "problemMatcher": "$tsc"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- General project properties -->
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+	</PropertyGroup>
+
+	<!-- Set the default runtime identifier depending on the compile environment (if not specified) -->
+	<PropertyGroup Condition="'$(RuntimeIdentifier)' == ''">
+		<RuntimeIdentifier Condition="'$(OS)' == 'Windows_NT'">win-x64</RuntimeIdentifier>
+		<RuntimeIdentifier Condition="'$(OS)' == 'Unix'">linux-x64</RuntimeIdentifier>
+	</PropertyGroup>
+
+	<!-- Package references -->
+	<ItemGroup>
+		<!-- Selenium.WebDriver is LOCKED to 3.13.0 since it's the last version to support PhantomJS but also have .NET Standard support -->
+		<PackageReference Include="Selenium.WebDriver" Version="[3.13.0]" />
+	</ItemGroup>
+
+	<!-- Copys the appropriate phantomjs executable to the bin folder on build -->
+	<Target Name="CopyPhantomJsExecutables" AfterTargets="AfterBuild">
+		<ItemGroup>
+			<PhantomExecutables Include="phantomjs\$(RuntimeIdentifier)\phantomjs*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PhantomExecutables)" DestinationFolder="$(OutDir)" />
+	</Target>
+
+	<!-- Copys the appropriate phantomjs executable to the publish output folder -->
+	<Target Name="CopyPhantomJsExecutablesOnPublish" AfterTargets="Publish">
+		<ItemGroup>
+			<PhantomExecutables Include="phantomjs\$(RuntimeIdentifier)\phantomjs*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PhantomExecutables)" DestinationFolder="$(PublishDir)" />
+	</Target>
+
+</Project>
